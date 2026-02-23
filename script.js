@@ -190,7 +190,7 @@ const SP_ITEM_H = 22;
 function updateSlowestPanel() {
   const stats = loadStats();
   const entries = Object.entries(stats)
-    .filter(([, v]) => v.timedCount > 0)
+    .filter(([k, v]) => v.timedCount > 0 && selected.has(k))
     .map(([k, v]) => ({ letter: k, avg: Math.round(v.totalMs / v.timedCount) }))
     .sort((a, b) => b.avg - a.avg)
     .slice(0, 10);
