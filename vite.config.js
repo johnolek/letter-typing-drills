@@ -9,7 +9,7 @@ export default defineConfig({
     viteSingleFile(),
   ],
   build: {
-    outDir: '../dist',
+    outDir: '../docs',
     emptyOutDir: true,
   },
 });
