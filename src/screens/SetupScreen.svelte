@@ -79,19 +79,20 @@
     <button class="pbtn" onclick={() => navigate('stats')}>Stats</button>
     <button class="pbtn" onclick={() => navigate('settings')}>Settings</button>
   </div>
+</div>
 
+<div class="bottom-bar">
   <div class="mode-row">
     <button class="mode-btn" class:active={mode === 'standard'} onclick={() => (mode = 'standard')}>Standard</button>
     <button class="mode-btn" class:active={mode === 'rhythm'}   onclick={() => (mode = 'rhythm')}>Rhythm</button>
   </div>
-
   <button class="start-btn" disabled={selection.size < 2} onclick={startDrill}>Start</button>
 </div>
 
 <style>
   .screen {
     padding: 20px;
-    padding-bottom: 100px;
+    padding-bottom: 148px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     height: 100%;
@@ -232,18 +233,28 @@
     margin-top: 18px;
   }
 
+  .bottom-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    padding: 12px 20px 20px;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 20;
+  }
+
   .mode-row {
     display: flex;
     border: 1px solid var(--border);
     border-radius: 10px;
     overflow: hidden;
-    margin-top: 16px;
-    margin-bottom: 12px;
   }
 
   .mode-btn {
     flex: 1;
-    padding: 10px;
+    padding: 9px;
     border: none;
     background: var(--surface);
     color: var(--text-dim);
@@ -259,8 +270,6 @@
   }
 
   .start-btn {
-    position: fixed;
-    bottom: 20px; left: 20px; right: 20px;
     padding: 15px;
     border-radius: 12px;
     border: none;
@@ -270,7 +279,6 @@
     font-size: 17px;
     font-weight: 700;
     cursor: pointer;
-    z-index: 20;
   }
   .start-btn:disabled { opacity: 0.3; cursor: default; }
 </style>
