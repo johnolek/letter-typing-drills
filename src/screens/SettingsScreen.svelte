@@ -47,47 +47,6 @@
     <input type="number" min="1" max="10" step="1" bind:value={settings.upcomingCount}>
   </div>
 
-  <div class="section-label">Rhythm Mode</div>
-
-  <div class="setting-row">
-    <div>
-      <div class="slabel">Starting interval</div>
-      <div class="sdesc">ms — initial sweep speed</div>
-    </div>
-    <input type="number" min="500" max="5000" step="100" bind:value={settings.rhythm.startMs}>
-  </div>
-
-  <div class="setting-row">
-    <div>
-      <div class="slabel">Minimum interval</div>
-      <div class="sdesc">ms — speed floor</div>
-    </div>
-    <input type="number" min="200" max="3000" step="100" bind:value={settings.rhythm.floorMs}>
-  </div>
-
-  <div class="setting-row">
-    <div>
-      <div class="slabel">Streak to speed up</div>
-      <div class="sdesc">consecutive hits needed</div>
-    </div>
-    <input type="number" min="5" max="100" step="5" bind:value={settings.rhythm.streakUp}>
-  </div>
-
-  <div class="setting-row">
-    <div>
-      <div class="slabel">Speed-up amount</div>
-      <div class="sdesc">ms faster per milestone</div>
-    </div>
-    <input type="number" min="25" max="500" step="25" bind:value={settings.rhythm.speedupMs}>
-  </div>
-
-  <div class="setting-row">
-    <div>
-      <div class="slabel">Metronome tick</div>
-      <div class="sdesc">audio cue at target moment</div>
-    </div>
-    <input type="checkbox" bind:checked={settings.rhythm.tick}>
-  </div>
 </div>
 
 <style>
@@ -154,14 +113,4 @@
     cursor: pointer;
   }
 
-  .section-label {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--text-dim);
-    margin: 20px 0 4px;
-    padding-top: 12px;
-    border-top: 1px solid var(--border);
-  }
 </style>

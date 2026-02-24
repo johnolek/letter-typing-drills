@@ -5,9 +5,6 @@
 
   let { navigate } = $props();
 
-  let mode = $state(localStorage.getItem('ld_mode') || 'standard');
-  $effect(() => { localStorage.setItem('ld_mode', mode); });
-
   function applyPreset(key) {
     selection.setAll(PRESETS[key]);
   }
@@ -22,7 +19,7 @@
 
   function startDrill() {
     if (selection.size < 2) return;
-    navigate(mode === 'rhythm' ? 'rhythm' : 'drill');
+    navigate('drill');
   }
 </script>
 
@@ -82,17 +79,13 @@
 </div>
 
 <div class="bottom-bar">
-  <div class="mode-row">
-    <button class="mode-btn" class:active={mode === 'standard'} onclick={() => (mode = 'standard')}>Standard</button>
-    <button class="mode-btn" class:active={mode === 'rhythm'}   onclick={() => (mode = 'rhythm')}>Rhythm</button>
-  </div>
   <button class="start-btn" disabled={selection.size < 2} onclick={startDrill}>Start</button>
 </div>
 
 <style>
   .screen {
     padding: 20px;
-    padding-bottom: 148px;
+    padding-bottom: 100px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     height: 100%;
@@ -239,37 +232,12 @@
     padding: 12px 20px 20px;
     background: var(--bg);
     border-top: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
     z-index: 20;
   }
 
-  .mode-row {
-    display: flex;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-  }
-
-  .mode-btn {
-    flex: 1;
-    padding: 9px;
-    border: none;
-    background: var(--surface);
-    color: var(--text-dim);
-    font-family: var(--sans);
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.12s;
-  }
-  .mode-btn.active {
-    background: var(--accent);
-    color: var(--bg);
-    font-weight: 700;
-  }
-
   .start-btn {
+    display: block;
+    width: 100%;
     padding: 15px;
     border-radius: 12px;
     border: none;

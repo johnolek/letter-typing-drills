@@ -1,7 +1,6 @@
 <script>
   import SetupScreen    from './screens/SetupScreen.svelte';
   import DrillScreen    from './screens/DrillScreen.svelte';
-  import RhythmScreen   from './screens/RhythmScreen.svelte';
   import StatsScreen    from './screens/StatsScreen.svelte';
   import SettingsScreen from './screens/SettingsScreen.svelte';
 
@@ -14,8 +13,6 @@
   <SetupScreen {navigate} />
 {:else if screen === 'drill'}
   <DrillScreen {navigate} />
-{:else if screen === 'rhythm'}
-  <RhythmScreen {navigate} />
 {:else if screen === 'stats'}
   <StatsScreen {navigate} />
 {:else if screen === 'settings'}

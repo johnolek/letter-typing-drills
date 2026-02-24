@@ -1,15 +1,8 @@
 const DEFAULTS = {
-  fastMs:       350,
-  mediumMs:     800,
-  pauseMs:      4000,
+  fastMs:        350,
+  mediumMs:      800,
+  pauseMs:       4000,
   upcomingCount: 2,
-  rhythm: {
-    startMs:   2000,
-    floorMs:   500,
-    streakUp:  20,
-    speedupMs: 100,
-    tick:      true,
-  },
 };
 
 class Settings {
@@ -17,7 +10,6 @@ class Settings {
   mediumMs      = $state(DEFAULTS.mediumMs);
   pauseMs       = $state(DEFAULTS.pauseMs);
   upcomingCount = $state(DEFAULTS.upcomingCount);
-  rhythm        = $state({ ...DEFAULTS.rhythm });
 
   constructor() {
     try {
@@ -26,7 +18,6 @@ class Settings {
       if (s.mediumMs      !== undefined) this.mediumMs      = s.mediumMs;
       if (s.pauseMs       !== undefined) this.pauseMs       = s.pauseMs;
       if (s.upcomingCount !== undefined) this.upcomingCount = s.upcomingCount;
-      if (s.rhythm)                      this.rhythm        = { ...DEFAULTS.rhythm, ...s.rhythm };
     } catch { /* ignore corrupt data */ }
   }
 
@@ -36,7 +27,6 @@ class Settings {
       mediumMs:      this.mediumMs,
       pauseMs:       this.pauseMs,
       upcomingCount: this.upcomingCount,
-      rhythm:        this.rhythm,
     }));
   }
 }
