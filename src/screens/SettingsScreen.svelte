@@ -79,7 +79,9 @@
     padding: 5px 12px;
     border-radius: 8px;
     cursor: pointer;
+    transition: border-color 0.12s, color 0.12s;
   }
+  .header button:hover { border-color: rgba(96,165,250,0.4); color: var(--text); }
 
   .setting-row {
     display: flex;

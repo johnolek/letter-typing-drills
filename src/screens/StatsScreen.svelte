@@ -67,7 +67,9 @@
           <td>{r.l}</td>
           <td>{r.avg || '—'}</td>
           <td>
-            <span class="abar" style:width="{bw}px" style:background={bc}></span>{r.acc}%
+            <span class="abar-wrap">
+              <span class="abar" style:width="{bw}px" style:background={bc}></span>
+            </span>{r.acc}%
           </td>
           <td>{r.n}</td>
         </tr>
@@ -108,7 +110,9 @@
     padding: 5px 12px;
     border-radius: 8px;
     cursor: pointer;
+    transition: border-color 0.12s, color 0.12s;
   }
+  .header button:hover { border-color: rgba(96,165,250,0.4); color: var(--text); }
 
   .grid {
     display: grid;
@@ -122,18 +126,21 @@
     border: 1px solid var(--border);
     border-radius: 11px;
     padding: 14px;
+    transition: border-color 0.15s;
   }
+  .scard:hover { border-color: rgba(96,165,250,0.25); }
   .scard .sl {
-    font-size: 11px;
+    font-size: 10px;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.2px;
     color: var(--text-dim);
-    margin-bottom: 4px;
+    margin-bottom: 6px;
   }
   .scard .sv {
     font-family: var(--mono);
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
+    letter-spacing: -0.5px;
   }
 
   .ltable {
@@ -162,13 +169,23 @@
   :global(.ltable tr.slow td:first-child) { color: var(--wrong); }
   :global(.ltable tr.fast td:first-child) { color: var(--correct); }
 
-  .abar {
+  .abar-wrap {
     display: inline-block;
+    width: 50px;
     height: 5px;
     border-radius: 3px;
-    min-width: 3px;
+    background: var(--border);
     vertical-align: middle;
-    margin-right: 4px;
+    margin-right: 6px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .abar {
+    display: block;
+    height: 100%;
+    border-radius: 3px;
+    min-width: 3px;
   }
 
   .clear-btn {
@@ -176,11 +193,16 @@
     width: 100%;
     padding: 11px;
     border-radius: 10px;
-    border: 1px solid var(--border);
-    background: none;
+    border: 1px solid rgba(248,113,113,0.2);
+    background: rgba(248,113,113,0.05);
     color: var(--wrong);
     font-family: var(--sans);
     font-size: 14px;
     cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .clear-btn:hover {
+    background: rgba(248,113,113,0.12);
+    border-color: rgba(248,113,113,0.4);
   }
 </style>

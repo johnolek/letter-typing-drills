@@ -41,8 +41,14 @@
     position: absolute;
     left: 6px;
     top: 6px;
-    width: 62px;
+    width: 66px;
     z-index: 4;
+    padding: 5px 6px 6px;
+    border-radius: 8px;
+    background: rgba(15,17,20,0.6);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(46,51,59,0.6);
   }
 
   .label {
@@ -51,7 +57,7 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     color: var(--text-dim);
-    opacity: 0.5;
+    opacity: 0.45;
     margin-bottom: 4px;
   }
 

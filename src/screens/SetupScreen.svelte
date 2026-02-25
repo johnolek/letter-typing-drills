@@ -95,16 +95,21 @@
 
   .title {
     font-family: var(--mono);
-    font-size: 26px;
+    font-size: 28px;
     font-weight: 700;
-    letter-spacing: -1px;
+    letter-spacing: -1.5px;
     margin-bottom: 4px;
+    background: linear-gradient(135deg, var(--text) 60%, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .sub {
     color: var(--text-dim);
-    font-size: 14px;
+    font-size: 13px;
     margin-bottom: 20px;
+    line-height: 1.5;
   }
 
   .section-label {
@@ -134,13 +139,27 @@
     font-size: 17px;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.1s;
+    transition: border-color 0.12s, background 0.12s, color 0.12s, transform 0.1s, box-shadow 0.12s;
+  }
+  .lbtn:hover {
+    border-color: rgba(96,165,250,0.5);
+    color: var(--text);
+    background: var(--surface2);
+    transform: scale(1.06);
+  }
+  .lbtn:active {
+    transform: scale(0.94);
   }
 
   .lbtn.on {
     border-color: var(--accent);
-    background: rgba(96,165,250,0.12);
+    background: rgba(96,165,250,0.14);
     color: var(--accent);
+    box-shadow: 0 0 10px rgba(96,165,250,0.18), inset 0 0 6px rgba(96,165,250,0.06);
+  }
+  .lbtn.on:hover {
+    background: rgba(96,165,250,0.22);
+    box-shadow: 0 0 14px rgba(96,165,250,0.28), inset 0 0 8px rgba(96,165,250,0.1);
   }
 
   .preset-row {
@@ -160,8 +179,10 @@
     font-size: 13px;
     cursor: pointer;
     white-space: nowrap;
+    transition: border-color 0.12s, color 0.12s, background 0.12s;
   }
-  .pbtn:active { background: var(--surface2); }
+  .pbtn:hover { border-color: rgba(96,165,250,0.35); color: var(--text); background: var(--surface2); }
+  .pbtn:active { background: var(--surface2); transform: scale(0.97); }
 
   .toggle-input-row {
     display: flex;
@@ -230,7 +251,9 @@
     position: fixed;
     bottom: 0; left: 0; right: 0;
     padding: 12px 20px 20px;
-    background: var(--bg);
+    background: linear-gradient(to bottom, transparent 0%, var(--bg) 20%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-top: 1px solid var(--border);
     z-index: 20;
   }
@@ -241,12 +264,23 @@
     padding: 15px;
     border-radius: 12px;
     border: none;
-    background: var(--accent);
+    background: linear-gradient(135deg, var(--accent) 0%, #3b82f6 100%);
     color: var(--bg);
     font-family: var(--sans);
     font-size: 17px;
     font-weight: 700;
     cursor: pointer;
+    transition: filter 0.15s, transform 0.1s, box-shadow 0.15s;
+    box-shadow: 0 2px 16px rgba(96,165,250,0.25);
+  }
+  .start-btn:not(:disabled):hover {
+    filter: brightness(1.1);
+    box-shadow: 0 4px 24px rgba(96,165,250,0.4);
+    transform: translateY(-1px);
+  }
+  .start-btn:not(:disabled):active {
+    transform: translateY(0px) scale(0.99);
+    filter: brightness(0.97);
   }
   .start-btn:disabled { opacity: 0.3; cursor: default; }
 </style>

@@ -39,7 +39,7 @@
     --correct:  #34d399;
     --wrong:    #f87171;
     --gold:     #fbbf24;
-    --mono:  'Menlo', 'Courier New', monospace;
+    --mono:  'Menlo', 'Courier New', monospace; /* generic already present */
     --sans:  -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   }
 
@@ -51,7 +51,9 @@
 
   :global(body) {
     height: 100%;
-    background: var(--bg);
+    background-color: var(--bg);
+    background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.025) 1px, transparent 0);
+    background-size: 28px 28px;
     color: var(--text);
     font-family: var(--sans);
     overflow: hidden;
@@ -70,13 +72,15 @@
   }
 
   @keyframes ringExpand {
-    0%   { width:20px;  height:20px;  border:3px solid var(--correct); opacity:1; }
-    100% { width:200px; height:200px; border:2px solid var(--correct); opacity:0; }
+    0%   { width:20px;  height:20px;  border:3px solid var(--correct); box-shadow:0 0 12px rgba(52,211,153,0.5); opacity:1; }
+    60%  { opacity:0.7; }
+    100% { width:220px; height:220px; border:1px solid var(--correct); box-shadow:0 0 0 rgba(52,211,153,0); opacity:0; }
   }
 
   @keyframes ringExpandGold {
-    0%   { width:20px;  height:20px;  border:4px solid var(--gold); opacity:1; }
-    100% { width:260px; height:260px; border:2px solid var(--gold); opacity:0; }
+    0%   { width:20px;  height:20px;  border:4px solid var(--gold); box-shadow:0 0 18px rgba(251,191,36,0.6); opacity:1; }
+    60%  { opacity:0.7; }
+    100% { width:280px; height:280px; border:1px solid var(--gold); box-shadow:0 0 0 rgba(251,191,36,0); opacity:0; }
   }
 
 </style>

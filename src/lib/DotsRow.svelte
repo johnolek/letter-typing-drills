@@ -20,13 +20,13 @@
   }
 
   .dot {
-    width: 7px;
-    height: 7px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    opacity: 0.7;
+    opacity: 0.8;
   }
 
-  .dot.c { background: var(--correct); }
-  .dot.w { background: var(--wrong); }
-  .dot.g { background: var(--gold); }
+  .dot.c { background: var(--correct); box-shadow: 0 0 5px rgba(52,211,153,0.6); }
+  .dot.w { background: var(--wrong);   box-shadow: 0 0 5px rgba(248,113,113,0.6); }
+  .dot.g { background: var(--gold);   box-shadow: 0 0 6px rgba(251,191,36,0.7); }
 </style>
