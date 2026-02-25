@@ -62,6 +62,8 @@
     }
   }
 
+  $effect(() => { inputEl?.focus(); });
+
   let dsAcc = $derived(session.accuracy !== null ? session.accuracy + '%' : '—');
   let dsLpm = $derived(session.lpm !== null ? String(session.lpm) : '—');
 </script>
