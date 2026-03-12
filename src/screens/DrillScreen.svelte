@@ -6,6 +6,7 @@
   import { spawnParticles } from '../lib/effects.js';
   import Carousel     from '../lib/Carousel.svelte';
   import DotsRow      from '../lib/DotsRow.svelte';
+
   import RingBurst    from '../lib/RingBurst.svelte';
   import StreakBar    from '../lib/StreakBar.svelte';
 
