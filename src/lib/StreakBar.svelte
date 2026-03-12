@@ -32,12 +32,14 @@
   let height = $derived(Math.min(20, 6 + level * 2));
 
   // ── Barber pole: level 2+, speed maxes at level 8 ──
-  const STRIPE_REPEAT = 17; // px — one full diagonal stripe cycle
+  // 135deg = forward-leaning stripes (/), animate +X = rightward motion
+  // background-size must match stripe period × √2 for seamless tiling
+  const STRIPE_SIZE = 30; // px — one full tile
   let stripeOffset = $state(0);
 
-  // Pixels per second: 10 at level 2, up to 42 at level 8+
+  // Pixels per second: 15 at level 2, up to ~47 at level 8+
   let stripeSpeed = $derived(
-    level < 2 ? 0 : 10 + (Math.min(level, 8) - 2) * 5.3
+    level < 2 ? 0 : 15 + (Math.min(level, 8) - 2) * 5.3
   );
 
   $effect(() => {
@@ -46,7 +48,7 @@
     let frame;
 
     function tick(now) {
-      stripeOffset = (stripeOffset + stripeSpeed * (now - last) / 1000) % STRIPE_REPEAT;
+      stripeOffset = (stripeOffset + stripeSpeed * (now - last) / 1000) % STRIPE_SIZE;
       last = now;
       frame = requestAnimationFrame(tick);
     }
@@ -54,12 +56,6 @@
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
   });
-
-  const stripeBackground = `repeating-linear-gradient(
-    -45deg,
-    rgba(255,255,255,0.55) 0px, rgba(255,255,255,0.55) 6px,
-    transparent 6px, transparent 12px
-  )`;
 </script>
 
 <div class="outer">
@@ -69,7 +65,7 @@
         {#if level >= 2}
           <div
             class="stripes"
-            style:background={stripeBackground}
+            style:background-size="{STRIPE_SIZE}px {STRIPE_SIZE}px"
             style:background-position="{stripeOffset}px 0"
           ></div>
         {/if}
@@ -113,7 +109,13 @@
   .stripes {
     position: absolute;
     inset: 0;
-    opacity: 0.25;
+    background: repeating-linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.45) 0px,
+      rgba(255, 255, 255, 0.45) 10px,
+      transparent 10px,
+      transparent 20px
+    );
   }
 
   .badge {
