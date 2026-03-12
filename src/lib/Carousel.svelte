@@ -23,9 +23,10 @@
       const s = slotEls[0];
       if (!s) return;
       s.classList.remove('shaking');
-      void s.offsetWidth;
-      s.classList.add('shaking');
-      setTimeout(() => s.classList.remove('shaking'), 350);
+      requestAnimationFrame(() => {
+        s.classList.add('shaking');
+        setTimeout(() => s.classList.remove('shaking'), 350);
+      });
     },
   };
 

@@ -1,4 +1,5 @@
 <script>
+  import debounce from 'lodash-es/debounce.js';
   import { settings }  from '../lib/state/Settings.svelte.js';
   import { stats }     from '../lib/state/Stats.svelte.js';
   import { selection } from '../lib/state/Selection.svelte.js';
@@ -92,14 +93,30 @@
   function effectOk()    { carouselCtrl?.flash('var(--correct)'); }
   function effectWrong() { carouselCtrl?.shake(); }
 
-  function saveProgress() {
+  const saveProgress = debounce(() => {
     localStorage.setItem('ld_progress', JSON.stringify({
       streakLevel,
       streakVal: Math.round(streakVal * 100) / 100,
       correct: session.correct,
       attempts: session.attempts,
     }));
+  }, 150, { maxWait: 1000 });
+
+  function flushAll() {
+    stats.save.flush();
+    saveProgress.flush();
   }
+
+  // Flush saves when page is hidden or unloaded
+  $effect(() => {
+    const handler = () => flushAll();
+    document.addEventListener('visibilitychange', handler);
+    window.addEventListener('pagehide', handler);
+    return () => {
+      document.removeEventListener('visibilitychange', handler);
+      window.removeEventListener('pagehide', handler);
+    };
+  });
 
   function onKeydown(e) {
     if (e.key === ' ' || e.key === 'Backspace' || e.key === 'Enter') e.preventDefault();
@@ -144,7 +161,7 @@
 
 <div class="screen">
   <div class="header">
-    <button onclick={() => navigate('setup')}>← Done</button>
+    <button onclick={() => { flushAll(); navigate('setup'); }}>← Done</button>
     <div class="stats">
       <span><span class="val">{session.correct}</span></span>
       <span><span class="val">{dsAcc}</span> acc</span>

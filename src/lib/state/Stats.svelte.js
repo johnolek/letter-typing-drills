@@ -1,3 +1,5 @@
+import debounce from 'lodash-es/debounce.js';
+
 class Stats {
   data = $state({});
 
@@ -27,13 +29,14 @@ class Stats {
   getAll() { return this.data; }
 
   clear() {
+    this.save.cancel();
     this.data = {};
     localStorage.removeItem('ld_stats');
   }
 
-  save() {
+  save = debounce(() => {
     localStorage.setItem('ld_stats', JSON.stringify(this.data));
-  }
+  }, 150, { maxWait: 1000 });
 }
 
 export const stats = new Stats();
