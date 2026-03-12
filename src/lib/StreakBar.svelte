@@ -1,14 +1,16 @@
 <script>
-  import { fly, scale } from 'svelte/transition';
+  import { Tween } from 'svelte/motion';
   import { cubicOut } from 'svelte/easing';
 
   let { val = 0, level = 0 } = $props();
 
+  const tweenVal   = Tween.of(() => val,   { duration: 150 });
+  const tweenLevel = Tween.of(() => level, { duration: 300, easing: cubicOut });
+
   // ── Color palette ──
-  // First 10 levels are hand-picked for a satisfying progression.
-  // Beyond that, deterministically generate colors by walking the hue wheel.
+  // First 10 levels are hand-picked. Beyond that, golden-ratio hue walk.
   const PALETTE = [
-    '#4b5563', // 0  grey (cold)
+    '#4b5563', // 0  grey
     '#60a5fa', // 1  blue
     '#38bdf8', // 2  sky
     '#2dd4bf', // 3  teal
@@ -22,53 +24,50 @@
 
   function colorForLevel(lvl) {
     if (lvl < PALETTE.length) return PALETTE[lvl];
-    // Golden-ratio hue walk — produces evenly-spaced, non-repeating hues
     const hue = ((lvl - PALETTE.length) * 137.508) % 360;
     return `hsl(${Math.round(hue)}, 75%, 60%)`;
   }
 
-  // ── Derived styles ──
-  let color    = $derived(colorForLevel(level));
-  let height   = $derived(Math.min(20, 6 + level * 2));
+  let color  = $derived(colorForLevel(level));
+  let height = $derived(Math.min(20, 6 + level * 2));
 </script>
 
-<div class="outer" style:height="{height}px">
-  <div class="track" style:height="{height}px">
-    <div class="fill" style:width="{val}%" style:background={color}></div>
+<div class="outer">
+  <div class="track-slot">
+    <div class="track" style:height="{height}px">
+    <div class="fill" style:width="{tweenVal.current}%" style:background={color}></div>
+    </div>
   </div>
-
-  {#key level}
-    {#if level > 0}
-      <span
-        class="badge"
-        style:color={color}
-        in:fly={{ y: -6, duration: 180, easing: cubicOut }}
-      >{level}</span>
-    {/if}
-  {/key}
+  <span class="badge" style:color={color}>{Math.round(tweenLevel.current)}</span>
 </div>
 
 <style>
   .outer {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 8px;
     width: min(84vw, 340px);
     margin-bottom: 14px;
   }
 
+  .track-slot {
+    width: 100%;
+    height: 20px;
+    display: flex;
+    align-items: center;
+  }
+
   .track {
-    flex: 1;
+    width: 100%;
     background: rgba(46, 51, 59, 0.9);
     border-radius: 3px;
     overflow: hidden;
-    transition: height 0.4s ease;
+    transition: height 0.3s ease;
   }
 
   .fill {
     height: 100%;
     border-radius: 3px;
-    transition: width 0.15s linear, background 0.4s ease;
   }
 
   .badge {
@@ -76,8 +75,6 @@
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.3px;
-    flex-shrink: 0;
-    min-width: 12px;
-    text-align: right;
+    margin-top: 4px;
   }
 </style>

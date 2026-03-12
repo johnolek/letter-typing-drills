@@ -22,13 +22,13 @@
   let particlesEl;
   let inputEl;
 
-  // ── Streak state ──
+  // ── Streak config ──
   const STREAK_HIT      = 5;
   const STREAK_HIT_FAST = 10;
   const STREAK_MAX      = 100;
   const STREAK_LEVEL_START = 20; // start at 20% when entering a new level
   const DRAIN_MS        = 150;
-  const DRAIN_BASE      = 1;  // pts/tick at level 0
+  const DRAIN_BASE      = .5;  // pts/tick at level 0
 
   let streakVal   = $state(0);
   let streakLevel = $state(0);
@@ -67,7 +67,7 @@
 
   function applyStreakPenalty() {
     const total    = streakLevel * STREAK_MAX + streakVal;
-    const newTotal = Math.floor(total * 0.75);
+    const newTotal = Math.floor(total * 0.90);
     ({ level: streakLevel, val: streakVal } = totalToLevelVal(newTotal));
   }
 
