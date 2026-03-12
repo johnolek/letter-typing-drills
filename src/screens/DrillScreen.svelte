@@ -30,8 +30,9 @@
   const DRAIN_MS        = 150;
   const DRAIN_BASE      = .5;  // pts/tick at level 0
 
-  let streakVal   = $state(0);
-  let streakLevel = $state(0);
+  const debugLevel = Number(new URLSearchParams(location.search).get('startLevel')) || 0;
+  let streakVal   = $state(debugLevel ? STREAK_LEVEL_START : 0);
+  let streakLevel = $state(debugLevel);
 
   function drainRate(level) {
     return DRAIN_BASE * (1.07 ** level);
@@ -140,8 +141,7 @@
     </div>
   </div>
 
-  <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="area" onclick={focusInput}>
+  <div class="area" role="application" onclick={focusInput}>
     {#if settings.showStreak}
       <StreakBar val={streakVal} level={streakLevel} />
     {/if}
