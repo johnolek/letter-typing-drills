@@ -111,24 +111,31 @@
   );
 
   // ── Barber pole: level 2+, speed maxes at level 8 ──
-  // 135deg = forward-leaning stripes (/), animate +X = rightward motion
-  // background-size must match stripe period × √2 for seamless tiling
-  const STRIPE_SIZE = 30; // px — one full tile
+  const STRIPE_SIZE = 30;
   let stripeOffset = $state(0);
-
-  // Pixels per second: 15 at level 2, up to ~47 at level 8+
   let stripeSpeed = $derived(
     level < 2 ? 0 : 15 + (Math.min(level, 8) - 2) * 5.3
   );
 
+  // ── Heat shimmer: level 9+ ──
+  let shimmerSkew = $state(0);
+  let hasShimmer = $derived(level >= 9);
+
+  // Single rAF loop drives both barber pole and shimmer
   $effect(() => {
-    if (stripeSpeed === 0) return;
+    if (stripeSpeed === 0 && !hasShimmer) return;
     let last = performance.now();
     let frame;
 
     function tick(now) {
-      stripeOffset = (stripeOffset + stripeSpeed * (now - last) / 1000) % STRIPE_SIZE;
+      const dt = (now - last) / 1000;
       last = now;
+      if (stripeSpeed > 0) {
+        stripeOffset = (stripeOffset + stripeSpeed * dt) % STRIPE_SIZE;
+      }
+      if (hasShimmer) {
+        shimmerSkew = Math.sin(now / 200) * 1.2 + Math.sin(now / 130) * 0.6;
+      }
       frame = requestAnimationFrame(tick);
     }
 
@@ -140,7 +147,12 @@
 <div class="outer">
   <div class="track-slot">
     <div class="track" style:height="{height}px" style:box-shadow={glow}>
-      <div class="fill" style:width="{tweenVal.current}%" style:background={color}>
+      <div
+        class="fill"
+        style:width="{tweenVal.current}%"
+        style:background={color}
+        style:transform={hasShimmer ? `skewX(${shimmerSkew}deg)` : null}
+      >
         {#if level >= 2}
           <div
             class="stripes"

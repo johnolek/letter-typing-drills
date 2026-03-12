@@ -71,7 +71,7 @@
         {#key queue[0]}
           <span
             style="display:block"
-            in:fly={{ x: 14, duration: 110, easing: cubicOut }}
+            in:fly={{ x: 14, duration: 110, easing: cubicOut, opacity: 1 }}
           >{queue[0] ?? ''}</span>
         {/key}
       {:else}
