@@ -1,13 +1,18 @@
 import { SvelteSet } from 'svelte/reactivity';
+import { LETTERS } from '../constants.js';
 
 class Selection {
   set = new SvelteSet();
 
   constructor() {
-    try {
-      const saved = JSON.parse(localStorage.getItem('ld_sel') || '[]');
-      for (const ch of saved) this.set.add(ch);
-    } catch { /* ignore */ }
+    const raw = localStorage.getItem('ld_sel');
+    if (raw) {
+      try {
+        for (const ch of JSON.parse(raw)) this.set.add(ch);
+      } catch { /* ignore */ }
+    } else {
+      for (const ch of LETTERS) this.set.add(ch);
+    }
   }
 
   toggle(ch) {
