@@ -26,7 +26,7 @@
   const STREAK_HIT      = 5;
   const STREAK_HIT_FAST = 10;
   const STREAK_MAX      = 100;
-  const STREAK_LEVEL_START = 20; // start at 20% when entering a new level
+  const STREAK_LEVEL_START = 20;  // start at 20% when gaining a level
   const DRAIN_MS        = 150;
   const DRAIN_BASE      = .5;  // pts/tick at level 0
 
@@ -38,19 +38,17 @@
     return DRAIN_BASE * (1.07 ** level);
   }
 
-  function totalToLevelVal(total) {
-    const level = Math.floor(total / STREAK_MAX);
-    const val   = total % STREAK_MAX;
-    return { level, val };
+  function setStreakFromTotal(newTotal) {
+    streakLevel = Math.floor(newTotal / STREAK_MAX);
+    streakVal   = newTotal % STREAK_MAX;
   }
 
-  // Drain — rate increases 5% per level
+  // Drain — rate increases per level
   $effect(() => {
     const id = setInterval(() => {
       const total = streakLevel * STREAK_MAX + streakVal;
       if (total <= 0) return;
-      const newTotal = Math.max(0, total - drainRate(streakLevel));
-      ({ level: streakLevel, val: streakVal } = totalToLevelVal(newTotal));
+      setStreakFromTotal(Math.max(0, total - drainRate(streakLevel)));
     }, DRAIN_MS);
     return () => clearInterval(id);
   });
@@ -67,9 +65,8 @@
   }
 
   function applyStreakPenalty() {
-    const total    = streakLevel * STREAK_MAX + streakVal;
-    const newTotal = Math.floor(total * 0.90);
-    ({ level: streakLevel, val: streakVal } = totalToLevelVal(newTotal));
+    const total = streakLevel * STREAK_MAX + streakVal;
+    setStreakFromTotal(Math.floor(total * 0.90));
   }
 
   function focusInput() { inputEl?.focus(); }
