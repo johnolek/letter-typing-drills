@@ -12,7 +12,16 @@
 
   let { navigate } = $props();
 
+  // ── Load saved progress ──
+  const saved = (() => {
+    try { return JSON.parse(localStorage.getItem('ld_progress')); } catch { return null; }
+  })();
+
   const session = new DrillSession(selection.letters, settings.upcomingCount);
+  if (saved) {
+    session.correct  = saved.correct ?? 0;
+    session.attempts = saved.attempts ?? 0;
+  }
 
   let dots         = $state([]);
   let dotSeq       = 0;
@@ -31,8 +40,8 @@
   const DRAIN_BASE      = .2;  // pts/tick at level 0
 
   const debugLevel = Number(new URLSearchParams(location.search).get('startLevel')) || 0;
-  let streakVal   = $state(debugLevel ? STREAK_LEVEL_START : 0);
-  let streakLevel = $state(debugLevel);
+  let streakVal   = $state(saved?.streakVal ?? (debugLevel ? STREAK_LEVEL_START : 0));
+  let streakLevel = $state(saved?.streakLevel ?? debugLevel);
 
   function drainRate(level) {
     return DRAIN_BASE * (1.07 ** level);
@@ -88,6 +97,15 @@
   function effectOk()    { carouselCtrl?.flash('var(--correct)'); }
   function effectWrong() { carouselCtrl?.shake(); }
 
+  function saveProgress() {
+    localStorage.setItem('ld_progress', JSON.stringify({
+      streakLevel,
+      streakVal: Math.round(streakVal * 100) / 100,
+      correct: session.correct,
+      attempts: session.attempts,
+    }));
+  }
+
   function onKeydown(e) {
     if (e.key === ' ' || e.key === 'Backspace' || e.key === 'Enter') e.preventDefault();
   }
@@ -111,6 +129,8 @@
       addDot('w');
       applyStreakPenalty();
     }
+
+    saveProgress();
   }
 
   $effect(() => { inputEl?.focus(); });

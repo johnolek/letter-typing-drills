@@ -17,8 +17,15 @@
     selection.toggle(ch);
   }
 
-  function startDrill() {
+  let savedProgress = null;
+  try {
+    const p = JSON.parse(localStorage.getItem('ld_progress'));
+    if (p && (p.correct > 0 || p.streakLevel > 0)) savedProgress = p;
+  } catch {}
+
+  function startDrill(clearProgress = false) {
     if (selection.size < 2) return;
+    if (clearProgress) localStorage.removeItem('ld_progress');
     navigate('drill');
   }
 </script>
@@ -78,7 +85,15 @@
     <button class="pbtn" onclick={() => navigate('stats')}>Stats</button>
     <button class="pbtn" onclick={() => navigate('settings')}>Settings</button>
   </div>
-  <button class="start-btn" disabled={selection.size < 2} onclick={startDrill}>Start</button>
+  {#if savedProgress}
+    <div class="progress-hint">
+      Level {savedProgress.streakLevel} · {savedProgress.correct} correct
+    </div>
+    <button class="start-btn" disabled={selection.size < 2} onclick={() => startDrill()}>Resume</button>
+    <button class="secondary-btn" disabled={selection.size < 2} onclick={() => startDrill(true)}>Start Over</button>
+  {:else}
+    <button class="start-btn" disabled={selection.size < 2} onclick={() => startDrill()}>Start</button>
+  {/if}
 </div>
 
 <style>
@@ -280,4 +295,31 @@
     filter: brightness(0.97);
   }
   .start-btn:disabled { opacity: 0.3; cursor: default; }
+
+  .progress-hint {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    text-align: center;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .secondary-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: none;
+    color: var(--text-dim);
+    font-family: var(--sans);
+    font-size: 14px;
+    cursor: pointer;
+    transition: border-color 0.12s, color 0.12s;
+  }
+  .secondary-btn:hover { border-color: rgba(96,165,250,0.4); color: var(--text); }
+  .secondary-btn:active { background: var(--surface); }
+  .secondary-btn:disabled { opacity: 0.3; cursor: default; }
 </style>
