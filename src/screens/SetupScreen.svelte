@@ -71,14 +71,13 @@
   {:else}
     <div class="enabled-display empty-hint">no letters selected</div>
   {/if}
+</div>
 
+<div class="bottom-bar">
   <div class="bottom-links">
     <button class="pbtn" onclick={() => navigate('stats')}>Stats</button>
     <button class="pbtn" onclick={() => navigate('settings')}>Settings</button>
   </div>
-</div>
-
-<div class="bottom-bar">
   <button class="start-btn" disabled={selection.size < 2} onclick={startDrill}>Start</button>
 </div>
 
@@ -244,7 +243,7 @@
   .bottom-links {
     display: flex;
     gap: 8px;
-    margin-top: 28px;
+    margin-bottom: 10px;
   }
 
   .bottom-bar {
