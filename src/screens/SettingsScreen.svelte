@@ -1,7 +1,11 @@
 <script>
+  import { Tween } from 'svelte/motion';
   import { settings } from '../lib/state/Settings.svelte.js';
 
   let { navigate } = $props();
+
+  const slowPctDisplay = new Tween(settings.slowPct, { duration: 150 });
+  $effect(() => { slowPctDisplay.set(settings.slowPct); });
 
   function back() {
     settings.save();
@@ -101,7 +105,7 @@
       <div class="row-label">Slow letter boost</div>
       <div class="row-desc">% chance of picking a slow letter</div>
     </div>
-    <span class="slider-val">{settings.slowPct}%</span>
+    <span class="slider-val">{Math.round(slowPctDisplay.current)}%</span>
   </div>
   <div class="slider-wrap">
     <input
@@ -267,6 +271,7 @@
     outline: none;
     cursor: pointer;
     display: block;
+    touch-action: none;
   }
 
   .slider-wrap input[type="range"]::-webkit-slider-thumb {
@@ -275,6 +280,7 @@
     height: 18px;
     border-radius: 50%;
     background: var(--accent);
+    background-clip: padding-box;
     cursor: pointer;
     box-shadow: 0 0 8px rgba(96,165,250,0.5);
     border: 2px solid var(--bg);
@@ -290,9 +296,25 @@
     height: 18px;
     border-radius: 50%;
     background: var(--accent);
+    background-clip: padding-box;
     cursor: pointer;
     box-shadow: 0 0 8px rgba(96,165,250,0.5);
     border: 2px solid var(--bg);
+  }
+
+  @media (pointer: coarse) {
+    .slider-wrap input[type="range"] {
+      padding: 14px 0;
+      box-sizing: content-box;
+    }
+    .slider-wrap input[type="range"]::-webkit-slider-thumb {
+      border: 10px solid transparent;
+      background-clip: padding-box;
+    }
+    .slider-wrap input[type="range"]::-moz-range-thumb {
+      border: 10px solid transparent;
+      background-clip: padding-box;
+    }
   }
   .slider-wrap input[type="range"]::-moz-range-progress {
     background: var(--accent);
