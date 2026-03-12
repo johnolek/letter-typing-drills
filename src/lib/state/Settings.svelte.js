@@ -5,6 +5,7 @@ const DEFAULTS = {
   upcomingCount: 2,
   slowPct:       30,  // % chance of picking from slow letters
   slowN:         5,   // draw from top-N slowest
+  showStreak:    true,
 };
 
 class Settings {
@@ -14,6 +15,7 @@ class Settings {
   upcomingCount = $state(DEFAULTS.upcomingCount);
   slowPct       = $state(DEFAULTS.slowPct);
   slowN         = $state(DEFAULTS.slowN);
+  showStreak    = $state(DEFAULTS.showStreak);
 
   constructor() {
     try {
@@ -24,6 +26,7 @@ class Settings {
       if (s.upcomingCount !== undefined) this.upcomingCount = s.upcomingCount;
       if (s.slowPct       !== undefined) this.slowPct       = s.slowPct;
       if (s.slowN         !== undefined) this.slowN         = s.slowN;
+      if (s.showStreak    !== undefined) this.showStreak    = s.showStreak;
     } catch { /* ignore corrupt data */ }
   }
 
@@ -35,6 +38,7 @@ class Settings {
       upcomingCount: this.upcomingCount,
       slowPct:       this.slowPct,
       slowN:         this.slowN,
+      showStreak:    this.showStreak,
     }));
   }
 }

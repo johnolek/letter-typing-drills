@@ -79,6 +79,20 @@
     </div>
   </div>
 
+  <div class="row">
+    <div class="row-info">
+      <div class="row-label">Streak meter</div>
+      <div class="row-desc">level bar during drill</div>
+    </div>
+    <button
+      class="toggle"
+      class:on={settings.showStreak}
+      onclick={() => settings.showStreak = !settings.showStreak}
+    >
+      <span class="knob"></span>
+    </button>
+  </div>
+
   <div class="section-label">Practice Weighting</div>
 
   <div class="row slider-row">
@@ -289,5 +303,37 @@
     font-size: 9px;
     color: var(--text-dim);
     opacity: 0.4;
+  }
+
+  /* ── Toggle ── */
+  .toggle {
+    width: 44px;
+    height: 26px;
+    border-radius: 13px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    transition: background 0.2s, border-color 0.2s;
+    padding: 0;
+  }
+  .toggle.on {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .toggle .knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--text);
+    transition: transform 0.2s;
+  }
+  .toggle.on .knob {
+    transform: translateX(18px);
+    background: var(--bg);
   }
 </style>

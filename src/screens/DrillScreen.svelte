@@ -135,7 +135,9 @@
 
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
   <div class="area" onclick={focusInput}>
-    <StreakBar val={streakVal} level={streakLevel} levelUp={streakLevelUp} />
+    {#if settings.showStreak}
+      <StreakBar val={streakVal} level={streakLevel} levelUp={streakLevelUp} />
+    {/if}
 
     <Carousel
       queue={session.queue}
