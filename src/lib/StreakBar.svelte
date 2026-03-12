@@ -31,6 +31,16 @@
   let color  = $derived(colorForLevel(level));
   let height = $derived(Math.min(20, 6 + level * 2));
 
+  // ── Glow halo: level 2+, intensity maxes at level 8 ──
+  let glowIntensity = $derived(
+    level < 2 ? 0 : Math.min(1, (level - 2) / 6)
+  );
+  let glow = $derived(
+    glowIntensity > 0
+      ? `0 0 ${8 + glowIntensity * 16}px ${color}, 0 0 ${glowIntensity * 40}px ${color}`
+      : 'none'
+  );
+
   // ── Barber pole: level 2+, speed maxes at level 8 ──
   // 135deg = forward-leaning stripes (/), animate +X = rightward motion
   // background-size must match stripe period × √2 for seamless tiling
@@ -60,7 +70,7 @@
 
 <div class="outer">
   <div class="track-slot">
-    <div class="track" style:height="{height}px">
+    <div class="track" style:height="{height}px" style:box-shadow={glow}>
       <div class="fill" style:width="{tweenVal.current}%" style:background={color}>
         {#if level >= 2}
           <div
@@ -96,7 +106,7 @@
     background: rgba(46, 51, 59, 0.9);
     border-radius: 3px;
     overflow: hidden;
-    transition: height 0.3s ease;
+    transition: height 0.3s ease, box-shadow 0.4s ease;
   }
 
   .fill {
