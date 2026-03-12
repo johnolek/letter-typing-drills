@@ -32,7 +32,7 @@
   let height   = $derived(Math.min(20, 6 + level * 2));
 </script>
 
-<div class="outer">
+<div class="outer" style:height="{height}px">
   <div class="track" style:height="{height}px">
     <div class="fill" style:width="{val}%" style:background={color}></div>
   </div>
@@ -54,7 +54,6 @@
     align-items: center;
     gap: 8px;
     width: min(84vw, 340px);
-    height: 20px;
     margin-bottom: 14px;
   }
 

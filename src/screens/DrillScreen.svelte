@@ -23,8 +23,8 @@
   let inputEl;
 
   // ── Streak state ──
-  const STREAK_HIT      = 10;
-  const STREAK_HIT_FAST = 15;
+  const STREAK_HIT      = 5;
+  const STREAK_HIT_FAST = 10;
   const STREAK_MAX      = 100;
   const STREAK_LEVEL_START = 20; // start at 20% when entering a new level
   const DRAIN_MS        = 150;
@@ -34,7 +34,7 @@
   let streakLevel = $state(0);
 
   function drainRate(level) {
-    return DRAIN_BASE * (1.05 ** level);
+    return DRAIN_BASE * (1.07 ** level);
   }
 
   function totalToLevelVal(total) {
