@@ -28,7 +28,7 @@
   const STREAK_MAX      = 100;
   const STREAK_LEVEL_START = 20;  // start at 20% when gaining a level
   const DRAIN_MS        = 150;
-  const DRAIN_BASE      = .5;  // pts/tick at level 0
+  const DRAIN_BASE      = .2;  // pts/tick at level 0
 
   const debugLevel = Number(new URLSearchParams(location.search).get('startLevel')) || 0;
   let streakVal   = $state(debugLevel ? STREAK_LEVEL_START : 0);
