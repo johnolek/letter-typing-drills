@@ -1,3 +1,7 @@
+import { BIGRAMS, TRIGRAMS } from '../constants.js';
+
+const DEFAULT_NGRAMS_TEXT = [...[...BIGRAMS].sort(), ...[...TRIGRAMS].sort()].join('\n');
+
 const DEFAULTS = {
   fastMs:        600,
   mediumMs:      1200,
@@ -7,7 +11,7 @@ const DEFAULTS = {
   slowN:         5,   // draw from top-N slowest
   showStreak:    true,
   ngramPct:      80,  // % of picks from bigrams/trigrams (rest are random single chars)
-  customNgrams:  '',  // user-supplied sequences (space/comma separated), empty = use defaults
+  customNgrams:  DEFAULT_NGRAMS_TEXT,
 };
 
 class Settings {

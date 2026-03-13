@@ -1,13 +1,6 @@
 <script>
   import { Tween } from 'svelte/motion';
   import { settings } from '../lib/state/Settings.svelte.js';
-  import { BIGRAMS, TRIGRAMS } from '../lib/constants.js';
-
-  const sortedBigrams  = [...BIGRAMS].sort();
-  const sortedTrigrams = [...TRIGRAMS].sort();
-  const defaultNgramsText = [...sortedBigrams, ...sortedTrigrams].join('\n');
-  let ngramText = $state(settings.customNgrams || defaultNgramsText);
-  function onNgramInput() { settings.customNgrams = ngramText; }
 
   let { navigate } = $props();
 
@@ -142,8 +135,8 @@
 
   <div class="row slider-row">
     <div class="row-info">
-      <div class="row-label">N-gram mix</div>
-      <div class="row-desc">% of letters generated from common bigrams and trigrams</div>
+      <div class="row-label">Sequence mix</div>
+      <div class="row-desc">% of letters generated from the sequences below vs random single characters</div>
     </div>
     <span class="slider-val">{Math.round(ngramPctDisplay.current)}%</span>
   </div>
@@ -170,8 +163,7 @@
   <textarea
     class="custom-ngrams"
     rows="8"
-    bind:value={ngramText}
-    oninput={onNgramInput}
+    bind:value={settings.customNgrams}
   ></textarea>
 
   <div class="reset-row">
